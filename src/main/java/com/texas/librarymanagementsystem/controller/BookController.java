@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.texas.librarymanagementsystem.controller.utils.ApiConstants.API_VER;
+import static com.texas.librarymanagementsystem.controller.utils.ApiConstants.BOOK_PATH;
+
 import com.texas.librarymanagementsystem.entity.Book;
 import com.texas.librarymanagementsystem.service.BookService;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping(API_VER + BOOK_PATH)
 public class BookController {
 
 	@Autowired
@@ -47,8 +50,13 @@ public class BookController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Book>> getBooks(@RequestParam String name){
-		List<Book> books= bookService.findByName(name);
+	public ResponseEntity<List<Book>> getBooks(@RequestParam(required=false) String name,@RequestParam(required=false) String author){
+		List<Book> books = null;
+		if(name != null){
+			books = bookService.findByName(name);
+		}else{
+			books = bookService.findByAuthorName(name);
+		}		
 		if(books == null || books.isEmpty()){
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}

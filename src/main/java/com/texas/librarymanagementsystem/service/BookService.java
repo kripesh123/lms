@@ -13,6 +13,7 @@ public interface BookService {
 	List<Book> findByRackNumber(String rackNumber);
 	List<Book> findByStatus(boolean status);
 	List<Book> findByAuthor(Author author);
+	List<Book> findByAuthorName(String name);
 	
 
 }
