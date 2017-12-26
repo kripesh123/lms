@@ -30,13 +30,19 @@ public class CustomerController {
 	@RequestMapping(method=RequestMethod.GET,
 			value="/customers",
 			params = { "page", "size" })
-	public Page<Customer> getAll(@RequestParam("page") int page, @RequestParam("size") int size){
+	public Page<Customer> getAll(@RequestParam("page") int page , @RequestParam("size") int size){
 		
 		Page<Customer> result = customerService.findPaginated(page, size);
 		if(page > result.getTotalPages()) {
 			throw new CustomerNotFoundException();
 		}
 		return result;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET,value="/all")
+	public ResponseEntity<List<Customer>> allCustomers(){
+		List<Customer> results = customerService.findAll();
+		return new ResponseEntity<List<Customer>>(results,HttpStatus.OK);
 	}
 
 }

@@ -19,7 +19,6 @@ import static com.texas.librarymanagementsystem.controller.utils.ApiConstants.US
 import java.util.Date;
 import java.util.Map;
 
-import javax.servlet.ServletException;
 
 @RestController
 @RequestMapping(API_VER + USER_PATH)
@@ -29,8 +28,7 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value="login", method = RequestMethod.POST)
-    public String login(@RequestBody Map<String, String> json) throws
-            LoginException {
+    public String login(@RequestBody Map<String, String> json) {
         if(json.get("username") == "" || json.get("password") == "") {
             throw new LoginException("Please fill in username and password");
         }
